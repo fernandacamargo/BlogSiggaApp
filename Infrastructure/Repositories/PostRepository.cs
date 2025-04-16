@@ -2,7 +2,7 @@
 using BlogSiggaApp.Domain.Interfaces;
 using SQLite;
 
-namespace BlogSiggaApp.Infra.Persistence
+namespace BlogSiggaApp.Infra
 {
     public class PostRepository : IPostRepository
     {

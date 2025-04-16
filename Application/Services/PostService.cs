@@ -9,7 +9,7 @@ public class PostService : IPostService
 
     public PostService(IPostRepository postRepository)
     {
-       _postRepository = postRepository;
+        _postRepository = postRepository;
     }
 
     public Task<List<Post>> GetPostsAsync()
@@ -24,7 +24,7 @@ public class PostService : IPostService
 
     public Task AddPostAsync(Post post)
     {
-      return _postRepository.AddPostAsync(post);
+        return _postRepository.AddPostAsync(post);
     }
 
     public List<Post> GetLocalPostsAsync()
@@ -34,11 +34,11 @@ public class PostService : IPostService
 
     public void SavePostsAsync(List<Post> posts)
     {
-         _postRepository.SavePostsAsync(posts);
+        _postRepository.SavePostsAsync(posts);
     }
 
-    public void  InsertPostsAsync(List<Post> newPosts)
+    public void InsertPostsAsync(List<Post> newPosts)
     {
-     _postRepository.InsertPostsAsync(newPosts);
+        _postRepository.InsertPostsAsync(newPosts);
     }
 }

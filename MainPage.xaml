@@ -44,6 +44,10 @@
                                Margin="5"
                                Padding="10"
                                HasShadow="True">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnPostTapped" CommandParameter="{Binding .}" />
+                            </Frame.GestureRecognizers>
+
                             <VerticalStackLayout>
                                 <Label Text="{Binding Title}"
                                        FontSize="18"

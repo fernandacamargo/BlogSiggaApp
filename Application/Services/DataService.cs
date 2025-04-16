@@ -2,7 +2,7 @@
 
 namespace BlogSiggaApp.Application.Services
 {
-    public class DataService
+    public class DataService : BaseService
     {
         private readonly IFileStreamService _fileStreamService;
 
@@ -21,7 +21,7 @@ namespace BlogSiggaApp.Application.Services
                 using (var reader = new StreamReader(stream))
                 {
                     string content = await reader.ReadToEndAsync();
-                    Console.WriteLine(content); 
+                    LogInformation(content); 
                 }
             }
 

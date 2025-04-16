@@ -2,7 +2,7 @@
 
 namespace BlogSiggaApp.Application.Interfaces
 {
-    public interface IWebService
+    public interface IWebServiceRepository
     {
         Task<List<Post>> GetDataAsync();
     }

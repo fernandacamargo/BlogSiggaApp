@@ -5,6 +5,6 @@
         public static string DatabasePath =>
             Path.Combine(FileSystem.AppDataDirectory, "database.db");
 
-        public static string ApiBaseUrl => "http://jsonplaceholder.typicode.com/posts";
+        public static string ApiBaseUrl => "https://jsonplaceholder.typicode.com";
     }
 }

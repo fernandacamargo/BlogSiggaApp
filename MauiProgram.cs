@@ -1,11 +1,11 @@
 ﻿using BlogSiggaApp.Application.Interfaces;
 using BlogSiggaApp.Application.Services;
 using BlogSiggaApp.Domain.Interfaces;
-using BlogSiggaApp.Infra.Http;
-using BlogSiggaApp.Infra.Persistence;
+using BlogSiggaApp.Infra;
 using BlogSiggaApp.Settings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace BlogSiggaApp
 {
@@ -13,6 +13,14 @@ namespace BlogSiggaApp
     {
         public static MauiApp CreateMauiApp()
         {
+
+            Log.Logger = new LoggerConfiguration()
+               .MinimumLevel.Debug() 
+               .WriteTo.Console()    
+               .WriteTo.File("logs\\app-log.txt", rollingInterval: RollingInterval.Day) 
+               .CreateLogger();
+
+
             var builder = MauiApp.CreateBuilder();
 
             builder
@@ -25,7 +33,15 @@ namespace BlogSiggaApp
 
 #if DEBUG
 
-            builder.Services.AddHttpClient<IWebService, WebService>((serviceProvider, client) =>
+
+            // Adicionando logger para debug
+            builder.Logging.AddDebug();
+
+            //Serilog
+            builder.Logging.AddSerilog();
+
+            //Repository web
+            builder.Services.AddHttpClient<IWebServiceRepository, WebServiceRepository>((serviceProvider, client) =>
             {
                 // Obter a configuração usando o IConfiguration
                 var configuration = serviceProvider.GetRequiredService<IConfiguration>();
@@ -33,9 +49,12 @@ namespace BlogSiggaApp
 
                 client.BaseAddress = new Uri(baseUrl);
                 client.DefaultRequestHeaders.Add("Accept", "application/json");
+                client.Timeout = TimeSpan.FromSeconds(30);
 
             });
 
+
+            //Repository db
             builder.Services.AddSingleton<IPostRepository>(sp =>
             {
 
@@ -45,18 +64,16 @@ namespace BlogSiggaApp
 
             // Registrar os outros serviços          
             builder.Services.AddSingleton<DataService>();
+            builder.Services.AddTransient<IBaseService, BaseService>();
             builder.Services.AddSingleton<IPostService, PostService>();
             builder.Services.AddTransient<IApiService, ApiService>();
-
 
             // Registrar o ViewModel
             builder.Services.AddTransient<PostsViewModel>();
 
             // Registrar Page
             builder.Services.AddTransient<MainPage>();
-
-            // Adicionando logger para debug
-            builder.Logging.AddDebug();
+                  
 
 #endif
 

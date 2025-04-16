@@ -2,7 +2,7 @@
 
 namespace BlogSiggaApp.Application.Services
 {
-    public class FileStreamService : IFileStreamService
+    public class FileStreamService : BaseService, IFileStreamService
     {
         private readonly string _filePath;
 
@@ -15,7 +15,7 @@ namespace BlogSiggaApp.Application.Services
         {
 
             if (!File.Exists(_filePath))
-                throw new FileNotFoundException($"O arquivo '{_filePath}' não foi encontrado.");
+                LogError($"O arquivo '{_filePath}' não foi encontrado.");
 
     
             return await Task.FromResult(new FileStream(_filePath, FileMode.Open, FileAccess.Read));
