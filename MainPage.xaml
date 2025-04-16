@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BlogSiggaApp.MainPage">
+
+    <StackLayout Padding="20" Spacing="10">
+
+        <!-- Indicador de Conectividade -->
+        <Label Text="{Binding ConnectionStatusText}" 
+               TextColor="{Binding ConnectionStatusColor}"
+               FontSize="14"
+               HorizontalOptions="Center"/>
+
+        <Label Text="📚 Blog Sigga"
+               FontSize="32"
+               HorizontalOptions="Center"
+               Margin="0,20,0,10"
+               FontAttributes="Bold"
+               TextColor="YellowGreen" />
+
+        <Label Text="Selecione um post para visualizar"
+               FontSize="16"
+               HorizontalOptions="Center"
+               Margin="0,0,0,10"
+               TextColor="Gray" />
+
+        <!-- ActivityIndicator -->
+        <ActivityIndicator IsRunning="{Binding IsBusy}" 
+                           IsVisible="{Binding IsBusy}"
+                           HorizontalOptions="Center" />
+
+        <!-- Pull to refresh -->
+        <RefreshView IsRefreshing="{Binding IsRefreshing}" 
+                     Command="{Binding RefreshCommand}">
+
+            <CollectionView ItemsSource="{Binding Posts}"
+                            SelectionMode="Single"
+                            SelectionChanged="OnSelectionChanged"
+                            Margin="0,10,0,0">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BorderColor="#ccc"
+                               CornerRadius="12"
+                               Margin="5"
+                               Padding="10"
+                               HasShadow="True">
+                            <VerticalStackLayout>
+                                <Label Text="{Binding Title}"
+                                       FontSize="18"
+                                       FontAttributes="Bold"
+                                       TextColor="Black"
+                                       LineBreakMode="TailTruncation"
+                                       MaxLines="2"/>
+                                <Label Text="{Binding Body}"
+                                       FontSize="14"
+                                       TextColor="DimGray"
+                                       LineBreakMode="TailTruncation"
+                                       MaxLines="3"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </StackLayout>
+</ContentPage>
